@@ -6,15 +6,15 @@ export interface User extends Document {
     lastName: string
     email: string;
     password: string;
-    formerPasswords: string;
-    failedAttempts: number;
-    blocked: {
+    formerPasswords?: string;
+    failedAttempts?: number;
+    blocked?: {
         isBlocked: boolean;
         expiry: Date;
     };
-    isAdmin: boolean;
-    isPremium: boolean;
-    dateCreated: Date;
+    isAdmin?: boolean;
+    isPremium?: boolean;
+    dateCreated?: Date;
 }
 
 export const UserSchema = new Schema<User>({
