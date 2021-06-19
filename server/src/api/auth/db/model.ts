@@ -1,8 +1,7 @@
-import mongoose from "mongoose";
+import mongoose, { Document, Schema } from "mongoose";
 import { validateEmail, validateName, validatePassword } from "./validation";
-const Schema = mongoose.Schema;
 
-interface User {
+export interface User extends Document {
     firstName: string;
     lastName: string
     email: string;
