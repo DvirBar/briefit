@@ -17,8 +17,10 @@
         "@typescript-eslint"
     ],
     "rules": {
-        "semi": ["error", "always"],
+        "semi": "off",
+        "@typescript-eslint/no-explicit-any": "off",
         "quotes": ["error", "double"],
-        "indent": ["error", 4]
+        "indent": ["error", 4],
+        "@typescript-eslint/semi": ["error"]
     }
 }
