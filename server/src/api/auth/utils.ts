@@ -104,11 +104,11 @@ export const clearRefreshCookie = (res: Response): Response => {
     );
 };
 
-export const getAccessCookie = (req: Request): CookieOptions => {
+export const getAccessCookie = (req: Request): string => {
     return req.cookies[accessCookieSettings.name];
 };
 
-export const getRefreshCookie = (req: Request): CookieOptions => {
+export const getRefreshCookie = (req: Request): string => {
     return req.cookies[refreshCookieSettings.name];
 };
 

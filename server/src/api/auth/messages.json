@@ -1,4 +1,18 @@
 {
+    "SuccessEdit": {
+        "message": {
+            "en": "Details updated successfully",
+            "he": "פרטי המשתמש עודכנו בהצלחה"
+        },
+        "status": 200
+    },
+    "SuccessDelete": {
+        "message": {
+            "en": "User deleted successfully",
+            "he": "המשתמש נמחק בהצלחה"
+        },
+        "status": 200
+    },
     "UserAlreadyExists": {
         "message": {
             "en": "A user with this email already exists",
