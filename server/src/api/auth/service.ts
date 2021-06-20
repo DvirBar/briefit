@@ -77,3 +77,9 @@ export async function refreshToken(refreshToken: string): Promise<string> {
 
     return createAccessToken({ id: user._id});
 }
+
+export async function editUser(user: IUser, userId: string) {
+    // TODO: add verification email if email was changed
+    const editedUser = await UserModel.editUser(userId, user);
+    return userWithoutPassword(editedUser);
+}
