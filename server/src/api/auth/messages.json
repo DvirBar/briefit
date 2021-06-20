@@ -1,6 +1,23 @@
 {
     "UserAlreadyExists": {
-        "en": "A user with this email already exists",
-        "he": "כבר קיים משתמש עם כתובת מייל זו"
+        "message": {
+            "en": "A user with this email already exists",
+            "he": "כבר קיים משתמש עם כתובת מייל זו"
+        },
+        "status": 409
+    },
+    "InvalidCredentials": {
+        "message": {
+            "en": "Email or password are incorrect",
+            "he": "אימייל או סיסמה שגויים"
+        },
+        "status": 401
+    },
+    "UserIsBlocked": {
+        "message": {
+            "en": "User is blocked",
+            "he": "המשתמש חסום"
+        },
+        "status": 401
     }
 }

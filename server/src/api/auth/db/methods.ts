@@ -60,3 +60,30 @@ export async function removeUser(this: UserModel, userId: string): Promise<void>
 
     await user.remove();
 }
+
+export function blockUser(user: IUser, expiry?: Date): Promise<IUser> {
+    user.blocked = {
+        isBlocked: true
+    };
+    
+    if(expiry) {
+        user.blocked.expiry = expiry;
+    }
+
+
+    return user.save();
+}
+
+export async function addFailedAttempt(user: IUser): Promise<number> {
+    if(user.failedAttempts) {
+        user.failedAttempts = user.failedAttempts + 1;
+        await user.save(); 
+    }
+     
+    return user.failedAttempts || 0;
+}
+
+export function resetFailedAttempts(user: IUser): Promise<IUser> {
+    user.failedAttempts = 0;
+    return user.save(); 
+}

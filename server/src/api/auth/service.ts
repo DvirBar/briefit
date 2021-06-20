@@ -1,7 +1,8 @@
 import User, { IUser, UserType } from "./db/types";
-import { UserAlreadyExists } from "./messages.json";
+import { UserAlreadyExists, InvalidCredentials, UserIsBlocked } from "./messages.json";
 import { Payload, UserAccess } from "./types";
 import { createAccessToken, createRefreshToken, userWithoutPassword } from "./utils";
+import bcrypt from "bcryptjs";
 
 const UserModel = User as UserType;
 
@@ -23,6 +24,45 @@ export async function register(userDetails: IUser): Promise<UserAccess> {
 
     const userObj = userWithoutPassword(user);
 
+    return {
+        accessToken,
+        refreshToken,
+        user: userObj
+    };
+}
+
+export async function login(email: string, loginPassword: string): Promise<UserAccess> {
+    const user = await UserModel.getUserByEmail(email);
+
+    // Validating creadentials and checking that user is not blocked
+    if(!user) {
+        throw InvalidCredentials;
+    }
+        
+    if(UserModel.isUserBlocked(user)) {
+        throw UserIsBlocked;
+    }
+
+    const isMatch = bcrypt.compare(loginPassword, user.password);
+
+    if(!isMatch) {
+        const failedAttempts = await UserModel.addFailedAttempt(user);
+
+        if(failedAttempts >= 5) {
+            UserModel.blockUser(user);
+            throw UserIsBlocked;
+        }
+
+        throw InvalidCredentials;
+    }
+        
+    // Authorization completed, log user in
+    UserModel.resetFailedAttempts(user);
+    const tokenPayload = { id: user._id };
+    const accessToken = createAccessToken(tokenPayload);
+    const refreshToken = createRefreshToken(tokenPayload);
+    const userObj = userWithoutPassword(user); 
+        
     return {
         accessToken,
         refreshToken,

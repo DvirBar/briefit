@@ -16,7 +16,7 @@ export interface IUser extends Document, UserSecureDetails {
     failedAttempts?: number;
     blocked?: {
         isBlocked: boolean;
-        expiry: Date;
+        expiry?: Date;
     };
 }
 
@@ -26,6 +26,10 @@ export interface UserMethods {
     getUserByEmail: (this: UserModel, email: string) => Promise<IUser | null>;
     createUser: (this: UserModel, userDetails: IUser) => Promise<IUser>;
     editUser: (this: UserModel, userId: string, userDetails: IUser) => Promise<IUser>;
+    isUserBlocked: (user: IUser) => boolean;
+    blockUser:  (user: IUser, expiry?: Date) => Promise<IUser>;
+    addFailedAttempt: (user: IUser) => Promise<number>; 
+    resetFailedAttempts: (user: IUser) => Promise<IUser>;
     removeUser: (this: UserModel, userId: string) => Promise<void>;
 }
 
