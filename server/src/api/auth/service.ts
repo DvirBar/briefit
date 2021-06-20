@@ -83,6 +83,10 @@ export async function refreshToken(refreshToken: string): Promise<string> {
     return createAccessToken({ id: user._id});
 }
 
+export function isUserBlocked(user: IUser): boolean {
+    return UserModel.isUserBlocked(user);
+}
+
 export async function editUser(user: IUser, userId: string): Promise<UserSecureDetails> {
     // TODO: add verification email if email was changed
     const editedUser = await UserModel.editUser(userId, user);
