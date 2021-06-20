@@ -1,3 +1,4 @@
+import { dateInPast } from "../../../utils/dates/dates";
 import { hashPassword } from "../utils";
 import { UserModel, IUser } from "./types";
 import { validateEmail } from "./validation";
@@ -29,6 +30,29 @@ export async function editUser(this: UserModel, userId: string, userDetails: IUs
     user.email = userDetails.email;
 
     return user.save();
+}
+
+export function isUserBlocked(user: IUser): boolean {
+    if(user?.blocked?.isBlocked) {
+        const expiry = user.blocked.expiry;
+    
+        // If no expiry and user is blocked
+        if(!expiry) {
+            return true;
+        }
+
+        // If expiry date had not passed
+        if(!dateInPast(expiry)) {
+            return true;
+        }
+        
+        // If expiry date had passed, remove block
+        user.blocked = undefined;
+        user.save();
+        return false;
+    }
+    
+    return false;
 }
 
 export async function removeUser(this: UserModel, userId: string): Promise<void> {
