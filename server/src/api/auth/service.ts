@@ -1,7 +1,7 @@
 import User, { IUser, UserType } from "./db/types";
 import { UserAlreadyExists, InvalidCredentials, UserIsBlocked } from "./messages.json";
 import { Payload, UserAccess } from "./types";
-import { createAccessToken, createRefreshToken, userWithoutPassword } from "./utils";
+import { createAccessToken, createRefreshToken, userWithoutPassword, verifyAccessToken, verifyRefreshToken } from "./utils";
 import bcrypt from "bcryptjs";
 
 const UserModel = User as UserType;
@@ -68,4 +68,12 @@ export async function login(email: string, loginPassword: string): Promise<UserA
         refreshToken,
         user: userObj
     };
+}
+
+export async function refreshToken(refreshToken: string): Promise<string> {
+    const decoded = verifyRefreshToken(refreshToken) as Payload;
+
+    const user = await UserModel.getByIdOrFail(decoded.id);
+
+    return createAccessToken({ id: user._id});
 }

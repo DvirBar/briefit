@@ -1,6 +1,7 @@
+import {  JwtPayload } from "jsonwebtoken";
 import { UserSecureDetails } from "./db/types";
 
-export type Payload = { 
+export interface Payload extends JwtPayload { 
     id: string
 };
 
