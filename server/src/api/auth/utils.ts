@@ -1,4 +1,5 @@
 import bcrypt from "bcryptjs";
+import { validatePassword } from "./db/validation";
 
 export const hashString = async(string: string): Promise<string> => {
     if(string.length <= 64) {
@@ -9,4 +10,12 @@ export const hashString = async(string: string): Promise<string> => {
     else {
         throw new Error("Dos attempt! user tried to insert password greater than 64.");
     }
+};
+
+export const hashPassword = async(password: string): Promise<string> => {
+    if(validatePassword(password)) {
+        return hashString(password);
+    }
+
+    throw new Error("Validation error: password is invalid");
 };

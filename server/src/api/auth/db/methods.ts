@@ -1,5 +1,6 @@
 import { FilterQuery } from "mongoose";
 import { EnhancedModel } from "../../../db/types";
+import { hashPassword } from "../utils";
 import { User } from "./model";
 import { validateEmail } from "./validation";
 
@@ -13,8 +14,12 @@ export function getUserByEmail(this: UserModel, email: string): FilterQuery<User
     return this.findOne({ email });
 }
 
-export function create(this: UserModel, userDetails: User): Promise<User> {
-    const newUser = new this(userDetails);
+export async function create(this: UserModel, userDetails: User): Promise<User> {
+    const hashedPassword = await hashPassword(userDetails.password);
+    const newUser = new this({
+        ...userDetails,
+        password: hashedPassword
+    });
 
     return newUser.save();
 }

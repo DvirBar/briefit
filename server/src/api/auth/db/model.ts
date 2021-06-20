@@ -48,10 +48,6 @@ export const UserSchema = new Schema<User>({
     },
     password: {
         type: String,
-        validate: {
-            validator: validatePassword,
-            message: "Password is invalid"
-        },
         required: [true, "Password is required"],
     },
     formerPasswords: [{
