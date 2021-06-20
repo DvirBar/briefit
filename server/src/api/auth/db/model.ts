@@ -1,23 +1,9 @@
-import mongoose, { Document, Schema } from "mongoose";
-import { validateEmail, validateName, validatePassword } from "./validation";
+import mongoose, { Schema } from "mongoose";
+import { IUser } from "./types";
+import { validateEmail, validateName } from "./validation";
 
-export interface User extends Document {
-    firstName: string;
-    lastName: string
-    email: string;
-    password: string;
-    formerPasswords?: string;
-    failedAttempts?: number;
-    blocked?: {
-        isBlocked: boolean;
-        expiry: Date;
-    };
-    isAdmin?: boolean;
-    isPremium?: boolean;
-    dateCreated?: Date;
-}
 
-export const UserSchema = new Schema<User>({
+export const UserSchema = new Schema<IUser>({
     firstName: {
         type: String,
         validate: {
@@ -75,4 +61,4 @@ export const UserSchema = new Schema<User>({
     }
 });
 
-export default mongoose.model<User>("User", UserSchema);
+export default mongoose.model<IUser>("User", UserSchema);
