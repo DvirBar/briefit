@@ -92,7 +92,6 @@ describe("test email validation", () => {
             expect(validateEmail("abcgmailcom")).toBe(false);
         });  
 
-         
         test("test value with 2 @", () => {
             expect(validateEmail("abc@gm@ailcom")).toBe(false);
         }); 
@@ -134,18 +133,18 @@ describe("test password validation", () => {
     describe("test invalid values", () => {
         describe(validatePassword, () => {
             test("password is shorter than 8 characters", () => {
-                expect(validatePassword("AB2rR4"));
+                expect(validatePassword("AB2rR4")).toBe(false);
             });
             test("does not contain lowercase", () => {
-                expect(validatePassword("AB24RRS44"));
+                expect(validatePassword("AB24RRS44")).toBe(false);
             });
 
             test("does not contain uppercase", () => {
-                expect(validatePassword("afd35fge"));
+                expect(validatePassword("afd35fge")).toBe(false);
             });
 
             test("does not contain numbers", () => {
-                expect(validatePassword("35fgefd42f"));
+                expect(validatePassword("35fgefd42f")).toBe(false);
             });
         });
     });
