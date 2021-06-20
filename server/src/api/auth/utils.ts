@@ -1,5 +1,8 @@
 import bcrypt from "bcryptjs";
 import { validatePassword } from "./db/validation";
+import { Response, Request } from "express";
+import jwt from "jsonwebtoken";
+import { Payload } from "./types";
 
 export const hashString = async(string: string): Promise<string> => {
     if(string.length <= 64) {
@@ -18,4 +21,92 @@ export const hashPassword = async(password: string): Promise<string> => {
     }
 
     throw new Error("Validation error: password is invalid");
+};
+
+const refreshTokenExp = 31536000; // 1 year
+const accessTokenExp = 900; // 15 minutes
+
+export const refreshCookieSettings = {
+    name: "_rt",
+    options: {
+        httpOnly: true,
+        path: "/api/auth/refreshToken",
+        maxAge: refreshTokenExp * 1000,
+        secure: process.env.NODE_ENV === "production"
+    }
+};
+
+const accessCookieSettings = {
+    name: "_at",
+    options: {
+        httpOnly: true,
+        maxAge: accessTokenExp * 1000,
+        secure: process.env.NODE_ENV === "production"
+    }
+};
+
+export const cookieSettings = {
+    access: accessCookieSettings,
+    refresh: refreshCookieSettings
+};
+
+export const verifyAccessToken = (token: string): string | jwt.JwtPayload => {
+    return jwt.verify(token, process.env.JWT_SECRET as jwt.Secret);
+};
+
+export const verifyRefreshToken = (token: string): string | jwt.JwtPayload => {
+    return jwt.verify(token, process.env.JWT_SECRET_REFRESH as jwt.Secret);
+};
+
+
+export const createAccessToken = (payload: Payload): string => {
+    return jwt.sign(
+        payload,
+        process.env.JWT_SECRET as jwt.Secret,
+        { expiresIn: accessTokenExp });
+};
+
+export const createRefreshToken = (payload: Payload): string => {
+    return jwt.sign(
+        payload,
+        process.env.JWT_SECRET_REFRESH as jwt.Secret,
+        { expiresIn: refreshTokenExp });
+};
+
+export const createAccessCookie = (res: Response, token: string): Response => {
+    return res.cookie(
+        accessCookieSettings.name, 
+        token, 
+        accessCookieSettings.options
+    );
+};
+
+export const createRefreshCookie = (res: Response, token: string): Response => {
+    return res.cookie(
+        refreshCookieSettings.name, 
+        token, 
+        refreshCookieSettings.options
+    );
+};
+
+export const clearAccessCookie = (res: Response): Response => {
+    return res.clearCookie(
+        accessCookieSettings.name,  
+        accessCookieSettings.options
+    );
+};
+
+export const clearRefreshCookie = (res: Response): Response => {
+    return res.clearCookie(
+        refreshCookieSettings.name,  
+        refreshCookieSettings.options
+    );
+};
+
+export const getAccessCookie = (req: Request) => {
+    return req.cookies[accessCookieSettings.name];
+};
+
+export const getRefreshCookie = (req: Request) => {
+    return req.cookies[refreshCookieSettings.name];
 };
