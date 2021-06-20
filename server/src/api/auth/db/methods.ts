@@ -28,3 +28,9 @@ export async function edit(this: UserModel, userId: string, userDetails: User): 
 
     return user.save();
 }
+
+export async function remove(this: UserModel, userId: string): Promise<void> {
+    const user = await this.getByIdOrFail(userId);
+
+    await user.remove();
+}
