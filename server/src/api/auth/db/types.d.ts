@@ -1,10 +1,16 @@
 import { EnhancedModel } from "../../../db/types";
-import { FilterQuery } from "mongoose";
+import { Document } from "mongoose";
 
-export interface IUser extends Document {
+export interface UserSecureDetails {
     firstName: string;
     lastName: string
     email: string;
+    isAdmin?: boolean;
+    isPremium?: boolean;
+    dateCreated?: Date;
+}
+
+export interface IUser extends Document, UserSecureDetails {
     password: string;
     formerPasswords?: string;
     failedAttempts?: number;
@@ -12,15 +18,12 @@ export interface IUser extends Document {
         isBlocked: boolean;
         expiry: Date;
     };
-    isAdmin?: boolean;
-    isPremium?: boolean;
-    dateCreated?: Date;
 }
 
 export type UserModel = EnhancedModel<IUser>;
 
 export interface UserMethods {
-    getUserByEmail: (this: UserModel, email: string) => FilterQuery<IUser | null>;
+    getUserByEmail: (this: UserModel, email: string) => Promise<IUser | null>;
     createUser: (this: UserModel, userDetails: IUser) => Promise<IUser>;
     editUser: (this: UserModel, userId: string, userDetails: IUser) => Promise<IUser>;
     removeUser: (this: UserModel, userId: string) => Promise<void>;

@@ -1,8 +1,9 @@
 import bcrypt from "bcryptjs";
 import { validatePassword } from "./db/validation";
-import { Response, Request } from "express";
+import { Response, Request, CookieOptions } from "express";
 import jwt from "jsonwebtoken";
 import { Payload } from "./types";
+import { IUser, UserSecureDetails } from "./db/types";
 
 export const hashString = async(string: string): Promise<string> => {
     if(string.length <= 64) {
@@ -103,10 +104,22 @@ export const clearRefreshCookie = (res: Response): Response => {
     );
 };
 
-export const getAccessCookie = (req: Request) => {
+export const getAccessCookie = (req: Request): CookieOptions => {
     return req.cookies[accessCookieSettings.name];
 };
 
-export const getRefreshCookie = (req: Request) => {
+export const getRefreshCookie = (req: Request): CookieOptions => {
     return req.cookies[refreshCookieSettings.name];
+};
+
+export const userWithoutPassword = (user: IUser): UserSecureDetails => {
+    const {
+        password,
+        formerPasswords,
+        failedAttempts,
+        blocked,
+        ...newUser
+    } = user.toObject();
+
+    return newUser;
 };
