@@ -1,6 +1,8 @@
 import mongoose, { Schema } from "mongoose";
+import { ConstructStaticMethods } from "../../../db/plugins";
 import { IUser } from "./types";
 import { validateEmail, validateName } from "./validation";
+import * as staticMethods from "./methods";
 
 
 export const UserSchema = new Schema<IUser>({
@@ -60,5 +62,10 @@ export const UserSchema = new Schema<IUser>({
         default: Date.now
     }
 });
+
+// Define static methods
+UserSchema.plugin(
+    ConstructStaticMethods as any, 
+    { customStaticMethods: staticMethods });
 
 export default mongoose.model<IUser>("User", UserSchema);

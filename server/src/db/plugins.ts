@@ -1,8 +1,8 @@
-import { Schema } from "mongoose";
+import { Schema, Document } from "mongoose";
 import * as staticMethods from "./methods";
 import { StaticMethodsOptions } from "./types";
 
-export function ConstructStaticMethods(schema: Schema, options: StaticMethodsOptions): void {
+export function ConstructStaticMethods(schema: Schema<Document>, options?: StaticMethodsOptions): void {
     const {
         customStaticMethods = {}
     } = options || {};

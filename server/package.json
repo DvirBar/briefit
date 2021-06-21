@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "dev": "SET \"NODE_ENV=development\" && nodemon src/index.ts",
+    "dev": "NODE_ENV=development nodemon src/index.ts",
     "lint": "eslint src/**/*.ts",
     "format": "eslint src/**/*.ts --fix"
   },
@@ -15,6 +15,7 @@
     "@types/jest": "^26.0.23",
     "@types/jsonwebtoken": "^8.5.2",
     "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "jest": "^27.0.4",
@@ -29,6 +30,7 @@
     "@babel/preset-typescript": "^7.13.0",
     "@types/bcryptjs": "^2.4.2",
     "@types/chai": "^4.2.18",
+    "@types/cookie-parser": "^1.4.2",
     "@types/express": "^4.17.12",
     "@types/mocha": "^8.2.2",
     "@types/morgan": "^1.9.2",

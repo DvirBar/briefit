@@ -4,6 +4,11 @@ import auth from "../../middleware/auth";
 import authAdmin from "../../middleware/authAdmin";
 import * as UserController from "./controller";
 
+// @route   GET api/auth/user
+// @desc    Get user by id from token
+// @access  Private
+router.get("/user", auth, UserController.getUserByToken);
+
 // @route   POST api/auth/register
 // @desc    Register
 // @access  Public

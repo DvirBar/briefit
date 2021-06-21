@@ -3,8 +3,10 @@ import morgan from "morgan";
 import dotenv from "dotenv";
 import path from "path";
 import mongoose from "mongoose";
+import cookieParser from "cookie-parser";
 
 const app: Application = express();
+
 
 dotenv.config({
     path: path.resolve("env", `.env.${process.env.NODE_ENV}`)
@@ -12,6 +14,12 @@ dotenv.config({
 
 app.use(express.json());
 app.use(morgan("tiny"));
+app.use(cookieParser());
+
+
+import auth from "./api/auth/router";
+
+app.use("/api/auth", auth);
 
 const port = parseInt(<string>process.env.PORT) || 7000;
 
