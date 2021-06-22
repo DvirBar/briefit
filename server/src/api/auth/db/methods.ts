@@ -46,7 +46,7 @@ export function isUserBlocked(user: IUser): boolean {
             return true;
         }
         
-        // If expiry date had passed, remove block
+        // If expiry date had passed, unblock user
         user.blocked = undefined;
         user.save();
         return false;

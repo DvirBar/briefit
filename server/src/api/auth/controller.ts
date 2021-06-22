@@ -5,12 +5,13 @@ import {
     clearRefreshCookie, 
     createAccessCookie, 
     createRefreshCookie, 
-    getRefreshCookie 
+    getRefreshCookie, 
+    userWithoutPassword
 } from "./utils";
 import { SuccessEdit, SuccessDelete } from "./messages.json";
 
 export function getUserByToken(_req: Request, res: Response): Response {
-    return res.send(res.locals.user);
+    return res.send(userWithoutPassword(res.locals.user));
 }
 
 export async function register(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
