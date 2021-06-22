@@ -10,7 +10,7 @@ enum Method {
     PATCH = "PATCH"
 }
 
-export interface Request {
+export interface RequestMeta {
     url: string;
     method: Method;
     timestamp?: Date
@@ -20,4 +20,12 @@ export interface IError {
     title: string;
     request?: Request;
     content: string;
+}
+
+export interface HTTPMessage {
+    message: {
+        he: string;
+        en: string;
+    };
+    status: number;
 }

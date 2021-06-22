@@ -1,8 +1,8 @@
-import { Request } from "express";
 import ErrorHandler from "./model";
-import { IError } from "./types";
+import { IError, RequestMeta } from "./types";
+import { GenObj } from "../../utils/objects/types";
 
-export const createError = (errContent: GenObj, request?: Request): Promise<IError> => {
+export const createError = (errContent: GenObj, request?: RequestMeta): Promise<IError> => {
     const newError = new ErrorHandler({
         title: errContent.Error || errContent.message,
         request,

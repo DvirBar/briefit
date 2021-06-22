@@ -1,3 +1,3 @@
-type GenObj = {
+export type GenObj = {
     [key: string]: any
 };
