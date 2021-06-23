@@ -1,8 +1,15 @@
-import React from 'react';
+import React from "react";
+import { BrowserRouter } from "react-router-dom";
+import Router from "./router/Router";
 
 function App(): JSX.Element {
   return (
-    <div className="App" />
+    <BrowserRouter>
+      <div className="App">
+        <Router />
+      </div>
+    </BrowserRouter>
+
   );
 }
 
