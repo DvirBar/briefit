@@ -1,9 +1,11 @@
 import React from "react";
+import Login from "./auth/Login/Login";
+import styles from "./Welcome.module.scss";
 
 function Welcome(): JSX.Element {
   return (
-    <div>
-      Welcome
+    <div className={styles.welcome}>
+      <Login />
     </div>
   );
 }

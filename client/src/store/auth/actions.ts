@@ -1,5 +1,5 @@
 import axios from "axios";
-import { IUser, reduceGetUser } from "./slice";
+import { reduceGetUser } from "./slice";
 import { AppDispatch } from "../store";
 import { LoginData, RegisterData } from "./types";
 
@@ -7,9 +7,9 @@ const baseUrl = "/auth";
 
 export const getUser = () => async (dispatch: AppDispatch): Promise<void> => {
   try {
-    const response: IUser = await axios.get(`${baseUrl}/user`);
+    const response = await axios.get(`${baseUrl}/user`);
 
-    dispatch(reduceGetUser(response));
+    dispatch(reduceGetUser(response.data));
   } catch (err) {
     console.log(err);
   }
@@ -19,9 +19,9 @@ export const register = (data: RegisterData) => async (dispatch: AppDispatch): P
   const body = JSON.stringify(data);
 
   try {
-    const response: IUser = await axios.post(`${baseUrl}/user`, body);
+    const response = await axios.post(`${baseUrl}/register`, body);
 
-    dispatch(reduceGetUser(response));
+    dispatch(reduceGetUser(response.data));
   } catch (err) {
     console.log(err);
   }
@@ -31,9 +31,9 @@ export const login = (data: LoginData) => async (dispatch: AppDispatch): Promise
   const body = JSON.stringify(data);
 
   try {
-    const response: IUser = await axios.post(`${baseUrl}/user`, body);
+    const response = await axios.post(`${baseUrl}/login`, body);
 
-    dispatch(reduceGetUser(response));
+    dispatch(reduceGetUser(response.data));
   } catch (err) {
     console.log(err);
   }
