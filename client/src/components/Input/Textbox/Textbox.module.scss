@@ -1,0 +1,59 @@
+@import "styles/variables.scss";
+
+.textboxWrapper {
+    position: relative;
+    padding: 2rem 0;
+    transition: color 0.3 ease-in-out;
+}
+
+.labelText {
+    font-size: 1.4rem;
+    position: absolute;
+    display: block;
+    top: -0.5rem;
+    right: 0;
+    color: #999;
+    font-size: 1.2rem;
+    transition: all 0.2s ease-in-out;
+}
+
+.labelError {
+    color: $color-error;
+}
+
+.textbox {
+    box-shadow: $shadow-main;
+    border: none;
+    outline: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    width: 100%;
+    font-size: inherit;
+    transition: box-shadow 0.3s ease-in-out;
+
+    &::placeholder {
+        color: transparent;
+    }
+
+    &:placeholder-shown + .labelText {
+        cursor: text;
+        top: 0;
+    }
+
+    &:focus {
+        + .labelText {
+            position: absolute;
+            top: 0;
+            font-size: 1.2rem;
+            color: $color-main;
+        }
+
+        box-shadow: $shadow-main-hover;
+    }
+}
+
+.error {
+    margin-top: 1rem;
+    font-size: 1.1rem;
+    color: $color-error;
+}
