@@ -2,7 +2,7 @@ import { ChangeEvent, FormEvent } from "react";
 import { GenObj } from "utils/objects/types";
 
 export interface FormHookControls<ValuesType> {
-    values: ValuesType | GenObj;
+    values: ValuesType;
     errors: ValuesType | GenObj;
     handleChange: (e: ChangeEvent<HTMLInputElement>) => void;
     handleSubmit: (

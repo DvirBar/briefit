@@ -9,7 +9,7 @@ import validateForm from "./formValidators";
 function useForm<ValuesType>(
   defaultValues: ValuesType,
 ): FormHookControls<ValuesType> {
-  const [values, setValues] = useState<ValuesType | GenObj>(defaultValues || {});
+  const [values, setValues] = useState<ValuesType>(defaultValues);
   const [errors, setErrors] = useState<ValuesType | GenObj>({});
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {

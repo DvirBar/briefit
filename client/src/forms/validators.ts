@@ -61,5 +61,9 @@ export default function validate(
 ): string | null {
   const validatorFunction = validators[validatorName];
 
-  return validatorFunction(value, message);
+  if (validatorFunction) {
+    return validatorFunction(value, message);
+  }
+
+  return null;
 }
