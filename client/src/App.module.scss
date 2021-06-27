@@ -1,0 +1,22 @@
+:root {
+    --main-shadow: 0 1px 4px #00000029;
+    --main-color: #2c73c9;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none;
+    $main-color: green;
+}
+
+html {
+    font-size: 10px;
+}
+
+body {
+    font-size: 1.6rem;
+    direction: rtl;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
